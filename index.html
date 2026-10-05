@@ -22,7 +22,7 @@ input[type=number]{width:90px}
 button{background:#1c2c45;cursor:pointer;font-weight:700}
 button:hover{filter:brightness(1.12)}
 .notice{margin:16px 0;padding:11px 14px;color:#c3cede;background:#111e31;border-left:3px solid var(--blue);border-radius:6px}
-.updated-badge{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:10px 16px;border-radius:10px;background:#1c2c45;border:1px solid var(--accent);color:var(--accent);font-size:15px;font-weight:800}
+.updated-badge{margin:0 0 14px;padding:10px 16px;border-radius:10px;background:#1c2c45;border:1px solid var(--accent);color:var(--accent);font-size:15px;font-weight:800;line-height:1.5}
 .updated-badge b{color:var(--accent)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
 .stat{padding:14px;cursor:pointer;transition:filter .1s}
@@ -65,6 +65,12 @@ canvas{width:100%;height:330px;display:block;background:#0b1019;border-radius:8p
 .guide-body b{color:var(--text)}
 .guide-body blockquote{margin:18px 0;padding:14px 18px;background:#111e31;border-left:3px solid var(--accent);border-radius:6px;color:#ffd9cc;font-weight:700}
 @media(max-width:900px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}header{align-items:start;flex-direction:column}}
+@media(max-width:600px){
+  th:nth-child(4),td:nth-child(4),th:nth-child(7),td:nth-child(7){display:none}
+  th,td{padding:9px 7px;font-size:12px}
+  .updated-badge{font-size:14px;padding:9px 13px}
+  .stat strong{font-size:21px}
+}
 </style>
 <main class="wrap">
 <header><div><h1><span>KENZ</span> 트렌드 전환 스캐너</h1><div class="sub">KOSPI · KOSDAQ | Trend Architect(KENZ 지표 활용) 상승·하락 전환 탐지</div><nav class="nav"><a class="nav-link active" href="index.html">📊 스캐너</a><a class="nav-link" href="guide.html">📖 사용법</a></nav></div></header>
