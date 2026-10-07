@@ -100,15 +100,16 @@ canvas{width:100%;height:330px;display:block;background:#0b1019;border-radius:8p
   <option value="all">전체 종목</option>
 </select></label></section>
 <section class="grid"><div class="card table-card"><div class="toolbar"><div><b id="resultTitle">스캔 결과</b> <span class="sub" id="count"></span></div><div style="display:flex;gap:8px;align-items:center"><input id="search" type="text" placeholder="종목명 또는 코드 검색" /></div></div><div id="table"><div class="empty">불러오는 중…</div></div></div><aside class="card chart-card"><div class="chart-title"><div><strong id="chartName">종목을 선택하세요</strong><div class="legend">캔들 · KENZ 클라우드 · 클라우드 상단 · 지지/저항</div></div><span id="chartSignal"></span></div><canvas id="chart"></canvas><div class="details" id="detail">표에서 종목을 선택하면 최근 90일 차트와 계산값을 확인할 수 있습니다.</div></aside></section>
-<!-- 쿠팡파트너스 다이나믹 배너 (2026-10-07 추가). 애드센스 승인이 안 돼서 대신 넣음.
-     PC용(728x90)/모바일용(320x100) 두 개를 만들어서 둘 다 넣어두고, 위 CSS의
+<!-- 쿠팡파트너스 다이나믹 배너 (2026-10-07 추가, 10-07에 PC용 크기 키움). 애드센스
+     승인이 안 돼서 대신 넣음. PC용(970x200, 원래 728x90이었는데 너무 작아 보여서 키움)/
+     모바일용(320x100, 그대로 유지) 두 개를 만들어서 둘 다 넣어두고, 위 CSS의
      #coupangBannerPc / #coupangBannerMobile 로 화면 폭에 따라 하나만 보이게 함.
      공정위 고지 문구는 "이 포스팅은..."이 원문인데, 이 사이트는 블로그 포스팅이
      아니라서 "이 사이트는..."으로 바꿔 씀(문구 자체는 그대로, 쿠팡파트너스 링크/배너
      바로 옆에 고지해야 한다는 규정에 맞춰 배너 바로 위에 배치함). -->
 <div class="coupang-wrap">
 <p class="coupang-disclosure">이 사이트는 쿠팡파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-<div class="coupang-banner" id="coupangBannerPc"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":1036900,"template":"carousel","trackingCode":"AF3411835","width":"728","height":"90","tsource":""});</script></div>
+<div class="coupang-banner" id="coupangBannerPc"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":1036900,"template":"carousel","trackingCode":"AF3411835","width":"970","height":"200","tsource":""});</script></div>
 <div class="coupang-banner" id="coupangBannerMobile"><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":1036900,"template":"carousel","trackingCode":"AF3411835","width":"320","height":"100","tsource":""});</script></div>
 </div>
 <p class="foot">이 페이지의 종목 데이터는 1~2시간마다 자동으로 갱신됩니다 — 위의 갱신 시각을 확인하세요 (실시간 갱신 아님). 로컬 앱과 달리 키움 API 실시간 조회·전종목 재스캔·연속봉수·가격변화율 값 조정은 지원하지 않습니다. 기술적 조건을 탐색하는 용도이며 매수·매도 추천이나 투자 자문이 아닙니다. "전환"은 Trend Architect 클라우드(KENZ 지표 활용)가 바뀐 시점이며, 데이터의 수정주가·휴장일·API 지연 여부를 감안해 참고하세요.</p>
