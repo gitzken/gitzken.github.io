@@ -111,7 +111,7 @@ canvas{width:100%;height:330px;display:block;background:#0b0e14;border-radius:12
   <option value="all">전체 종목 (파동 검출분)</option>
 </select></label><label class="field" style="flex-direction:row;align-items:center;gap:7px"><input type="checkbox" id="excludeEtf" checked style="width:auto;margin:0" />ETF·ETN 제외</label></section>
 <section class="grid"><div class="card table-card"><div class="toolbar"><div><b id="resultTitle">파동마스터 결과</b> <span class="sub" id="count"></span></div><div style="display:flex;gap:8px;align-items:center"><input id="search" type="text" placeholder="종목명 또는 코드 검색" /></div></div><div id="table"><div class="empty">불러오는 중…</div></div></div>
-<aside class="card chart-card"><div class="chart-title"><div><strong id="chartName">종목을 선택하세요</strong><div class="legend">캔들 · MR-50 · SMR-50(소파동) · 1차 목표가(STP)</div></div><div style="display:flex;gap:8px;align-items:center"><span id="chartSignal"></span><button id="typeToggleBtn" class="type-toggle" style="display:none"></button></div></div><canvas id="chart"></canvas><div class="details" id="detail">표에서 종목을 선택하면 파동 구간 차트와 레벨 값을 확인할 수 있습니다.</div></aside></section>
+<aside class="card chart-card"><div class="chart-title"><div><strong id="chartName">종목을 선택하세요</strong><div class="legend">캔들 · MR-50 · SMR-50(소파동) · 1차 목표가(STP)</div></div><div style="display:flex;gap:8px;align-items:center"><span id="chartSignal"></span><label style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);cursor:pointer;white-space:nowrap"><input type="checkbox" id="showSupRes" style="width:auto;margin:0" />지지/저항</label><button id="typeToggleBtn" class="type-toggle" style="display:none"></button></div></div><canvas id="chart"></canvas><div class="details" id="detail">표에서 종목을 선택하면 파동 구간 차트와 레벨 값을 확인할 수 있습니다.</div></aside></section>
 <p class="foot">파동마스터는 최근 구간에서 가장 큰 "파동"(ENP 진바닥 → 고점) 하나를 자동으로 찾아, 그 50% 지점 근처의 MR-50(핵심 레벨)과 1차 목표가(STP), 더 작은 스케일의 SMR-50(소파동 중심축)을 계산해 보여줍니다. 유형A(1단 하락유형)/유형B(2단 하락유형) 중 파동 모양에 맞는 유형을 자동으로 판별합니다. 이 페이지의 데이터도 1~2시간마다 자동으로 갱신됩니다. 기술적 패턴을 탐색하는 참고용 도구이며 매수·매도 추천이나 투자 자문이 아닙니다 — 실제 매매 판단은 본인 책임하에 하세요.</p>
 </main>
 
@@ -154,6 +154,7 @@ function typeLabel(ty){
 function autoSet(x){ return x.w.sel==='B' ? x.w.B : x.w.A; }
 
 let waveTypeOverride=null; // null=자동, 'A' 또는 'B'면 그쪽을 강제로 보는 중
+let showSupRes=false; // 스캐너에 있는 지지/저항 점선 오버레이를 파동마스터 차트에도 선택적으로 표시 (2026-10-28 추가)
 function activeSet(x){
   if(waveTypeOverride==='A') return {key:'A', set:x.w.A};
   if(waveTypeOverride==='B') return {key:'B', set:x.w.B};
@@ -259,15 +260,13 @@ async function paintWave(){
   const b=ch.d.map((d,i)=>({date:d,open:ch.o[i],high:ch.h[i],low:ch.l[i],close:ch.c[i]}));
   const n=b.length-1;
   const enpIdx=Math.max(0,n-ch.enpOff);
-  const stpOff = key==='B' ? ch.stpOffB : ch.stpOffA;
-  const stpIdx=Math.max(0,n-stpOff);
   const cv=$('chart'),ctx=cv.getContext('2d'),cvw=cv.width=cv.clientWidth*devicePixelRatio,cvh=cv.height=cv.clientHeight*devicePixelRatio;
   ctx.scale(devicePixelRatio,devicePixelRatio);
   const cw_=cv.clientWidth, ch_=cv.clientHeight;
   // 캔들은 화면 왼쪽 절반에만 그리고(PLOT_FRAC), MR-50/SMR-50/1차목표가 가로선은 화면
   // 끝까지 길게 뻗어서 오른쪽에 "앞으로 진행할 여백"이 보이게 한다 (2026-10-22 요청).
   const PLOT_FRAC=0.5;
-  let vals=b.flatMap(z=>[z.high,z.low]).concat([w.stp,w.mrT,w.mrB,w.smrT,w.smrB]).filter(v=>v!=null&&isFinite(v));
+  let vals=b.flatMap(z=>[z.high,z.low]).concat([w.stp,w.mrT,w.mrB,w.smrT,w.smrB]).concat(showSupRes?(ch.sup||[]):[]).concat(showSupRes?(ch.res||[]):[]).filter(v=>v!=null&&isFinite(v));
   let min=Math.min(...vals),max=Math.max(...vals),pad=(max-min)*.08;min-=pad;max+=pad;
   let X=i=>b.length<=1?0:i*(cw_*PLOT_FRAC)/(b.length-1),Y=v=>ch_-(v-min)/(max-min)*ch_;
   ctx.clearRect(0,0,cw_,ch_);
@@ -276,6 +275,8 @@ async function paintWave(){
   // 레벨 가로선은 전부 같은 점선 스타일로 통일(위/아래선 구분 없이) — 2026-10-22 요청.
   function hline(v,color,width,dash){ctx.save();ctx.setLineDash(dash||[6,4]);ctx.strokeStyle=color;ctx.lineWidth=width||1.5;const x0=X(enpIdx);ctx.beginPath();ctx.moveTo(x0,Y(v));ctx.lineTo(cw_,Y(v));ctx.stroke();ctx.restore()}
   function hbox(top,bot,color){ctx.fillStyle=color;const x0=X(enpIdx);ctx.fillRect(x0,Y(top),cw_-x0,Math.max(1,Y(bot)-Y(top)))}
+  // 스캐너 차트에 있는 지지/저항 점 오버레이 (2026-10-28 추가, 체크박스로 켤 때만 그림).
+  function dots(arr,color,r=1.6){if(!arr)return;ctx.fillStyle=color;for(let i=0;i<arr.length;i++){let v=arr[i];if(v==null||!isFinite(v))continue;ctx.beginPath();ctx.arc(X(i),Y(v),r,0,Math.PI*2);ctx.fill()}}
   const mainCol = key==='B' ? 'rgba(244,114,182,.16)' : 'rgba(255,122,80,.16)';
   const mainLine = key==='B' ? '#f472b6' : '#ff7a50';
   if(w.smrT!=null){ hbox(w.smrT,w.smrB,'rgba(61,220,154,.16)'); hline(w.smrT,'#3ddc9a'); hline(w.smrB,'#3ddc9a'); }
@@ -284,7 +285,7 @@ async function paintWave(){
   // 진바닥(ENP)은 차트에 선/점으로 표시하지 않음 — 파동 크기(계산 범위)가 그대로
   // 드러나는 걸 막기 위해 숫자는 아래 설명 텍스트로만 안내한다 (2026-10-22 요청).
   b.forEach((z,i)=>{let col=z.close>=z.open?'#ff6b7d':'#6fa8ff',xx=X(i),yy1=Y(z.high),yy2=Y(z.low),yo=Y(z.open),yc=Y(z.close),cwid=Math.max(2,(cw_*PLOT_FRAC)/b.length*.58);ctx.strokeStyle=col;ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(xx,yy1);ctx.lineTo(xx,yy2);ctx.stroke();ctx.fillRect(xx-cwid/2,Math.min(yo,yc),cwid,Math.max(1,Math.abs(yc-yo)))});
-  ctx.fillStyle='#6fa8ff';ctx.beginPath();ctx.arc(X(stpIdx),Y(w.stp),3,0,Math.PI*2);ctx.fill();
+  if(showSupRes){ dots(ch.sup,'#3ddc9a'); dots(ch.res,'#ff6b7d'); }
   $('detail').innerHTML=`<b>${ch.d[n]} 종가 ${fmt(ch.c[n])}</b><br>${info.emoji} ${info.text}<br>진바닥(ENP) ${fmt(x.w.enp)} · MR-50 ${fmt(w.mrB)}~${fmt(w.mrT)} · 1차 목표가(STP) ${fmt(w.stp)}${w.smrT!=null?` · 소파동(SMR-50) ${fmt(w.smrB)}~${fmt(w.smrT)}`:''} · ${typeLabel(key)} · 목표가까지 ${w.rc?'돌파함':(w.dp!=null?w.dp.toFixed(1)+'%':'—')}`;
 }
 
@@ -303,6 +304,7 @@ $('filter').onchange=()=>{$('search').value='';render()};
 document.querySelectorAll('.stat[data-filter]').forEach(el=>el.onclick=()=>{$('search').value='';$('filter').value=el.dataset.filter;render()});
 $('search').addEventListener('input',render);
 $('excludeEtf').addEventListener('change',()=>{stats();render()});
+$('showSupRes').addEventListener('change',()=>{showSupRes=$('showSupRes').checked;paintWave();});
 stats();
 render();
 </script>
