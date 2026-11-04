@@ -1,5 +1,6 @@
 # 자동 생성 (publish_to_github.py) — 계산 로직/원본 코드 유출 방지용 안전장치
-# index.html 과 charts/*.json (결과 데이터)만 공개되어야 하며, 아래 파일들은 절대 올라가면 안 됩니다.
+# index.html/sr.html/breakdown.html/breakout.html 과 charts 등 결과 데이터만 공개되어야
+# 하며, 아래 파일들은 절대 올라가면 안 됩니다.
 *.py
 *.pyc
 __pycache__/
