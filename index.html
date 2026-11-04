@@ -126,8 +126,10 @@ tbody tr.selected{background:var(--accent-soft)}
 .pinktag{background:rgba(244,114,182,.14);color:var(--pink)}
 .cloud-up{color:var(--green);font-weight:700}
 .cloud-down{color:var(--red);font-weight:700}
-.type-toggle{font-size:11px;padding:6px 12px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line);color:var(--muted);cursor:pointer;font-weight:700;white-space:nowrap}
-.type-toggle:hover{color:var(--text);border-color:var(--accent)}
+.type-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:-4px 0 12px}
+.type-tab{font-size:11.5px;padding:6px 11px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line);color:var(--muted);cursor:pointer;font-weight:700;white-space:nowrap;font-family:inherit;transition:color .15s,border-color .15s,background .15s}
+.type-tab:hover{color:var(--text);border-color:var(--accent)}
+.type-tab.active{color:#1a0f0a;background:linear-gradient(155deg,var(--accent),var(--accent-2));border-color:transparent}
 .chart-card{padding:18px;position:sticky;top:16px;align-self:start}
 .chart-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px}
 .chart-title strong{font-size:16px;font-weight:700}
