@@ -81,6 +81,11 @@ h1 span{color:var(--accent)}
 .pw-modal input:focus{outline:none;border-color:var(--accent)}
 .pw-modal-actions{display:flex;gap:8px;justify-content:center}
 .pw-modal-error{display:none;color:#ff6b7d;font-size:12px;margin:-4px 0 10px}
+/* 레벨(선/수치) 잠금 토글 버튼 + 잠긴 테이블 셀 */
+.lvl-toggle{font-size:12px;padding:8px 14px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line);color:var(--muted);cursor:pointer;font-weight:700;white-space:nowrap;font-family:inherit;transition:color .15s,border-color .15s,background .15s}
+.lvl-toggle:hover{color:var(--text);border-color:var(--accent)}
+.lvl-toggle.unlocked{color:#1a0f0a;background:linear-gradient(155deg,var(--accent),var(--accent-2));border-color:transparent}
+.locked-cell{color:var(--muted-2);opacity:.65}
 /* 상세정보(구 구매) 탭 */
 .buy-card{padding:38px 32px;text-align:center;max-width:640px;margin:0 auto}
 .buy-card h2{font-size:20px;margin:0 0 14px;font-weight:800}
@@ -181,21 +186,21 @@ canvas{width:100%;height:330px;display:block;background:#0b0e14;border-radius:12
 <h3>SR지표</h3>
 <p class="role">SUPPORT/RESISTANCE &amp; TREND</p>
 <p>KENZ 고유의 Trend Architect 클라우드를 기준으로 지지/저항과 추세 전환(상승/하락)을 KOSPI · KOSDAQ 전종목에서 자동으로 스캔합니다.</p>
-<div class="feature-actions"><a class="btn-primary" href="sr.html#scanner">🔒 스캐너 열기 →</a><a class="btn-ghost" href="sr.html#buy">📋 상세정보</a></div>
+<div class="feature-actions"><a class="btn-primary" href="sr.html#scanner">스캐너 열기 →</a><a class="btn-ghost" href="sr.html#buy">📋 상세정보</a></div>
 </div>
 <div class="card feature-card">
 <div class="feature-icon">📈</div>
 <h3>브레이크다운지표</h3>
 <p class="role">상승추세분석도구</p>
 <p>상승추세의 되돌림(풀백) 구간에서 ENP → MR-50 → SMR-50 → STP로 이어지는 단계별 지지 목표가를 자동으로 제시합니다.</p>
-<div class="feature-actions"><a class="btn-primary" href="breakdown.html#scanner">🔒 스캐너 열기 →</a><a class="btn-ghost" href="breakdown.html#buy">📋 상세정보</a></div>
+<div class="feature-actions"><a class="btn-primary" href="breakdown.html#scanner">스캐너 열기 →</a><a class="btn-ghost" href="breakdown.html#buy">📋 상세정보</a></div>
 </div>
 <div class="card feature-card">
 <div class="feature-icon">📉</div>
 <h3>브레이크아웃지표</h3>
 <p class="role">하락추세분석도구</p>
 <p>하락추세의 반등 구간에서 ENP → MR-50 → SMR-50 → STP로 이어지는 단계별 저항 목표가를 자동으로 제시합니다.</p>
-<div class="feature-actions"><a class="btn-primary" href="breakout.html#scanner">🔒 스캐너 열기 →</a><a class="btn-ghost" href="breakout.html#buy">📋 상세정보</a></div>
+<div class="feature-actions"><a class="btn-primary" href="breakout.html#scanner">스캐너 열기 →</a><a class="btn-ghost" href="breakout.html#buy">📋 상세정보</a></div>
 </div>
 </section>
 <p class="foot">이 사이트의 종목 데이터는 1~2시간마다 자동으로 갱신됩니다. 기술적 조건을 탐색하는 참고용 도구이며 매수·매도 추천이나 투자 자문이 아닙니다.</p>
