@@ -164,6 +164,12 @@ canvas{width:100%;height:330px;display:block;background:#0b0e14;border-radius:12
 .coupang-disclosure{color:var(--muted-2);font-size:11px;margin:0 0 10px}
 .coupang-banner{display:inline-block;max-width:100%;overflow:hidden;border-radius:10px}
 #coupangBannerMobile{display:none}
+/* 트레이딩뷰 블랙프라이데이 제휴 배너(2026-11-09, 전체 4페이지 공통 — 어느 서브탭에
+   있든 항상 보이도록 cat-panel 바깥, 각 페이지 콘텐츠 맨 아래에 배치) */
+.tv-promo-wrap{margin:22px 0 6px;text-align:center;padding:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.tv-promo-disclosure{color:var(--muted-2);font-size:11px;margin:0 0 10px}
+.tv-promo-banner{display:inline-block;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);line-height:0}
+.tv-promo-banner img{display:block;width:200px;height:200px;max-width:100%}
 @media(max-width:900px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.coupang-wrap{order:0;grid-column:auto;margin:16px 0}}
 @media(max-width:600px){
   .grid-scanner th:nth-child(4),.grid-scanner td:nth-child(4),.grid-scanner th:nth-child(7),.grid-scanner td:nth-child(7){display:none}
@@ -209,6 +215,12 @@ canvas{width:100%;height:330px;display:block;background:#0b0e14;border-radius:12
 </div>
 </section>
 <p class="foot">이 사이트의 종목 데이터는 1~2시간마다 자동으로 갱신됩니다. 기술적 조건을 탐색하는 참고용 도구이며 매수·매도 추천이나 투자 자문이 아닙니다.</p>
+<div class="tv-promo-wrap">
+<p class="tv-promo-disclosure">이 배너는 트레이딩뷰 제휴(어필리에이트) 링크이며, 클릭 후 구매 시 소정의 수수료를 제공받을 수 있습니다.</p>
+<a class="tv-promo-banner" href="https://www.tradingview.com/black-friday/?aff_id=170737&utm_source=creative&utm_lang=KR" target="_blank" rel="noopener sponsored">
+<img src="https://s3.tradingview.com/pub/referrals/creatives/BF/KR/200x200SmallSquare.jpg" srcset="https://s3.tradingview.com/pub/referrals/creatives/BF/KR/400x400SmallSquare.jpg 2x" width="200" height="200" alt="TradingView 블랙프라이데이 할인" loading="lazy">
+</a>
+</div>
 </div></main>
 
 </body></html>
