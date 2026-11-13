@@ -106,6 +106,9 @@ h1 span{color:var(--accent)}
 .guide-body b{color:var(--text)}
 .guide-body blockquote{margin:20px 0;padding:15px 19px;background:var(--panel-2);border-left:3px solid var(--accent);border-radius:10px;color:var(--accent-text);font-weight:700}
 .guide-body img{width:100%;border-radius:12px;border:1px solid var(--line);display:block;margin:15px 0}
+.guide-body .clip-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:15px 0}
+.guide-body .clip-grid video{width:100%;display:block;border-radius:12px;border:1px solid var(--line);background:#000}
+@media(max-width:640px){.guide-body .clip-grid{grid-template-columns:1fr}}
 /* 스캐너 탭 */
 .settings{padding:16px 18px;display:flex;gap:14px;align-items:end;flex-wrap:wrap}
 .field{display:grid;gap:6px;color:var(--muted);font-size:12px;font-weight:600}
